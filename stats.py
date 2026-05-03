@@ -18,11 +18,10 @@ class Stats:
         }
 
     def report(self):
-        print("\n===== SCHEDULER SIMULATION RESULTS =====\n")
         for algorithm, data in self.results.items():
             print(f"Algorithm: {algorithm}")
-            print(f"  Avg Waiting Time:     {data['avg_waiting_time']:.2f} ticks")
-            print(f"  Avg Turnaround Time:  {data['avg_turnaround_time']:.2f} ticks")
+            print(f"Avg Waiting Time: {data['avg_waiting_time']:.2f} ticks")
+            print(f"Avg Turnaround Time: {data['avg_turnaround_time']:.2f} ticks")
             print()
 
         best = min(self.results, key=lambda a: self.results[a]['avg_waiting_time'])
