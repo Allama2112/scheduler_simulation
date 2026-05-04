@@ -30,7 +30,6 @@ class Process:
         self.arrival_time = arrival_time
         self.priority = priority
         self.num_cycles = num_cycles
-    
 
         # Generating all bursts
         self.cpu_bursts = [random.randint(1, 10) for _ in range(num_cycles)]

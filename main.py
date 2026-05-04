@@ -1,53 +1,34 @@
-from scheduler import priority_scheduler
-
-from scheduler import SJF
-from scheduler import FCFS
-
-from stats import Stats
 from process import Process
+from scheduler import fcfs, sjf, priority
+from simulation import run_simulation
+from stats import Stats
 
-
-
-def initprocess():
-    return [
-        Process(1, 0, 2),
-        Process(2, 1, 1),
-        Process(3, 2, 3),
-        Process(4, 3, 2),
-        Process(5, 4, 1),
-        Process(6, 5, 1),
-        Process(7, 6, 1),
-        Process(8, 7, 1),
-        Process(9, 8, 1),
-        Process(10, 9, 1),
-        Process(11, 10, 1),
-        Process(12, 11, 1),
-        Process(13, 12, 1),
-        Process(14, 13, 1),
-        Process(15, 14, 1),
-        Process(16, 15, 1),
-        Process(17, 16, 1),
-        Process(18, 17, 1),
-        Process(19, 18, 1),
-        Process(20, 19, 1),
-    ]
+# Create processes
+processes = [
+    Process(pid=1, arrival_time=0, priority=3),
+    Process(pid=2, arrival_time=2, priority=1),
+    Process(pid=3, arrival_time=4, priority=4),
+    Process(pid=4, arrival_time=6, priority=2),
+    Process(pid=5, arrival_time=8, priority=5),
+    Process(pid=6, arrival_time=10, priority=7),
+    Process(pid=7, arrival_time=12, priority=6),
+    Process(pid=8, arrival_time=14, priority=10),
+    Process(pid=9, arrival_time=16, priority=9),
+    Process(pid=10, arrival_time=18, priority=11),
+    Process(pid=11, arrival_time=20, priority=8),
+    Process(pid=12, arrival_time=22, priority=15),
+    Process(pid=13, arrival_time=24, priority=14),
+    Process(pid=14, arrival_time=26, priority=12),
+    Process(pid=15, arrival_time=28, priority=13),
+]
 
 stats = Stats()
 
-#####
-
-#processes = initprocess()
-#SFJ(processes)
-#stats.record("Shortest Job First", processes)
-
-#processes = initprocess()
-#FCFS(processes)
-#stats.record("First Come First Serve", processes)
-
-processes = initprocess()
-priority_scheduler(processes)
-stats.record("Priority", processes)
-
-
+for algorithm_name, scheduler_fn in [('FCFS', fcfs), ('SJF', sjf), ('Priority', priority)]:
+    for p in processes:
+        p.reset()
+    run_simulation(processes, scheduler_fn)
+    stats.record(algorithm_name, processes)
 
 stats.report()
+stats.plot_all()
